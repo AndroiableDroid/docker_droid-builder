@@ -7,7 +7,7 @@
   [![](https://images.microbadger.com/badges/commit/fr3akyphantom/droid-builder.svg)](https://microbadger.com/images/fr3akyphantom/droid-builder "Get your own commit badge on microbadger.com")
   [![Docker Pulls](https://img.shields.io/docker/pulls/fr3akyphantom/droid-builder)](https://hub.docker.com/r/fr3akyphantom/droid-builder "Show the Docker Repository")
 
-  <h3><i>Docker Container based upon Ubuntu Bionic 18.04 LTS for Building any Android ROM or Recovery Projects</i></h3>
+  <h3><i>Standalone Docker Container based upon Updated Ubuntu Bionic 18.04 LTS for Building Android ROMs or Recovery Projects</i></h3>
 
 </div>
 
@@ -18,7 +18,8 @@
 ### Get the Image
 
 Pull the latest image by running the following command.
-You may also need to start the bash as root user by running `sudo -s`.
+
+You might want to start the _bash_ as _root user_ by running `sudo -s`.
 
 ```bash
 docker pull fr3akyphantom/droid-builder:latest
