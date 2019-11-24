@@ -1,0 +1,42 @@
+name: Docker Builder
+
+on: [push]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    env:
+      DOCKER_USERNAME: fr3akyphantom
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      IMAGE_NAME: droid-builder
+
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Bypass Build
+      if: "contains(github.event.head_commit.message, '[skip ci]')"
+      run: echo -en "Bypassing the main build, because the commit message contains - [skip ci]" && exit 0
+
+    - name: Create & Push the Droid Builder Container
+      if: "! contains(github.event.head_commit.message, '[skip ci]')"
+      run: >-
+        echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USERNAME --password-stdin
+
+        docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
+        docker build . --file Dockerfile
+        --rm --force-rm --compress --no-cache=true --pull
+        --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%S%Z"`
+        --build-arg VCS_REF=`git rev-parse --short HEAD`
+        --build-arg VCS_URL=`git remote get-url origin`
+        --build-arg VERSION='1.1' 
+        --tag $DOCKER_USERNAME/$IMAGE_NAME:latest
+
+        docker push $DOCKER_USERNAME/$IMAGE_NAME:latest
+
+        docker logout
+
+        docker images | awk '(NR>1) && ($$2!~/none/) {print $$1":"$$2}' | grep "$DOCKER_USERNAME/$IMAGE_NAME" | xargs -n1 docker rmi || exit 0
