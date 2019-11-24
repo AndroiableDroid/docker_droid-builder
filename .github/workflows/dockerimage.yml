@@ -40,3 +40,7 @@ jobs:
         docker logout
 
         docker images | awk '(NR>1) && ($$2!~/none/) {print $$1":"$$2}' | grep "$DOCKER_USERNAME/$IMAGE_NAME" | xargs -n1 docker rmi || exit 0
+
+    - name: Refresh MicroBadger Metadata for Container Info
+      if: success()
+      run: curl -X POST "https://hooks.microbadger.com/images/fr3akyphantom/droid-builder/BvX646w7iSxCNiWg_M7-amdz4qo="
