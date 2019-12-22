@@ -1,6 +1,9 @@
 name: Docker Builder
 
-on: [push]
+on:
+  push:
+    branches:
+    - master
 
 jobs:
 
@@ -14,7 +17,7 @@ jobs:
       IMAGE_NAME: droid-builder
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v1.2.0
 
     - name: Bypass Build
       if: "contains(github.event.head_commit.message, '[skip ci]')"
@@ -32,14 +35,29 @@ jobs:
         --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%S%Z"`
         --build-arg VCS_REF=`git rev-parse --short HEAD`
         --build-arg VCS_URL=`git remote get-url origin`
-        --build-arg VERSION='1.1' 
+        --build-arg VERSION='1.1'
         --tag $DOCKER_USERNAME/$IMAGE_NAME:latest
 
         docker push $DOCKER_USERNAME/$IMAGE_NAME:latest
 
-        docker logout
+    - name: Create & Push the Eoan-based Droid Builder Container
+      if: "! contains(github.event.head_commit.message, '[skip ci]')"
+      run: >-
+        docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
-        docker images | awk '(NR>1) && ($$2!~/none/) {print $$1":"$$2}' | grep "$DOCKER_USERNAME/$IMAGE_NAME" | xargs -n1 docker rmi || exit 0
+        sed -i -e "s/bionic/eoan/g" -e "s/Bionic/Eoan/g" Dockerfile
+
+        docker build . --file Dockerfile
+        --rm --force-rm --compress --no-cache=true --pull
+        --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%S%Z"`
+        --build-arg VCS_REF=`git rev-parse --short HEAD`
+        --build-arg VCS_URL=`git remote get-url origin`
+        --build-arg VERSION='1.1'
+        --tag $DOCKER_USERNAME/$IMAGE_NAME:eoan
+
+        docker push $DOCKER_USERNAME/$IMAGE_NAME:eoan
+
+        docker logout
 
     - name: Refresh MicroBadger Metadata for Container Info
       if: "! contains(github.event.head_commit.message, '[skip ci]')"
