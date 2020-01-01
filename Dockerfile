@@ -34,7 +34,7 @@ RUN apt-get -q -y update \
     && apt-get -q -y install \
         apt-utils apt-transport-https \
         curl wget wput git subversion mercurial build-essential squashfs-tools automake autoconf binutils \
-        software-properties-common coreutils tree sshpass sudo \
+        software-properties-common coreutils bc tree asciinema sshpass sudo \
         android-sdk-platform-tools android-tools-adb android-tools-adbd android-tools-fastboot \
         openjdk-8-jdk openjdk-8-jre openjdk-8-jre-headless maven nodejs\
         file screen axel bison clang cmake rsync flex gnupg gperf pngcrush schedtool bsdmainutils \
