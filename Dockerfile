@@ -38,7 +38,7 @@ RUN apt-get -q -y update \
         android-sdk-platform-tools android-tools-adb android-tools-adbd android-tools-fastboot \
         openjdk-8-jdk openjdk-8-jre openjdk-8-jre-headless maven nodejs\
         file screen axel bison clang cmake rsync flex gnupg gperf pngcrush schedtool bsdmainutils \
-        python-dev python3-dev zip unzip lzop zlib1g-dev xz-utils patchutils \
+        python-dev python3-dev zip unzip lzop zlib1g-dev xz-utils pxz patchutils \
         gcc gcc-multilib g++ g++-multilib libxml2 libxml2-utils xsltproc expat \
         libncurses5-dev lib32ncurses5-dev libreadline-gplv2-dev lib32z1-dev libsdl1.2-dev libwxgtk3.0-dev \
     && apt-get -y autoremove \
