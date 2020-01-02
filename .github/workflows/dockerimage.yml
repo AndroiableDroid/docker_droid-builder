@@ -41,7 +41,7 @@ jobs:
         docker push $DOCKER_USERNAME/$IMAGE_NAME:latest
 
     - name: Create & Push the Eoan-based Droid Builder Container
-      if: "! contains(github.event.head_commit.message, '[skip ci]')"
+      if: "contains(github.event.head_commit.message, '[build eoan]')"
       run: >-
         docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
