@@ -7,7 +7,7 @@ ARG VERSION
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="Android ROM Builder" \
-      org.label-schema.description="Ubuntu Latest LTS Image For Building Android ROMs/TWRPs" \
+      org.label-schema.description="Ubuntu LTS Image For Building Android ROMs/TWRPs" \
       org.label-schema.url="https://rokibhasansagar.github.io/" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url=$VCS_URL \
@@ -41,11 +41,12 @@ RUN apt-get -q -y update \
         python-dev python3-dev zip unzip lzop zlib1g-dev xz-utils pxz patchutils \
         gcc gcc-multilib g++ g++-multilib libxml2 libxml2-utils xsltproc expat \
         libncurses5-dev lib32ncurses5-dev libreadline-gplv2-dev lib32z1-dev libsdl1.2-dev libwxgtk3.0-dev \
+    && apt-get -y clean \
     && apt-get -y autoremove \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* \
     && dpkg-divert --local --rename /usr/bin/ischroot && ln -sf /bin/true /usr/bin/ischroot \
     && chmod u+s /usr/bin/screen \
-    && chmod 755 /var/run/screen \
-    && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
+    && chmod 755 /var/run/screen
 
 RUN mkdir -p /home/builder \
     && useradd --no-create-home builder \
