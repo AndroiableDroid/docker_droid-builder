@@ -2,6 +2,9 @@ name: Docker Builder
 
 on:
   push:
+    paths:
+    - 'Dockerfile'
+    - 'android-env-vars.sh'
     branches:
     - master
 
@@ -40,12 +43,12 @@ jobs:
 
         docker push $DOCKER_USERNAME/$IMAGE_NAME:latest
 
-    - name: Create & Push the Eoan-based Droid Builder Container
-      if: "contains(github.event.head_commit.message, '[build eoan]')"
+    - name: Create & Push the Eoan-based (Rolling) Droid Builder Container
+      if: "contains(github.event.head_commit.message, '[build all]')"
       run: >-
         docker run --rm --privileged multiarch/qemu-user-static:register --reset
 
-        sed -i -e "s/bionic/eoan/g" -e "s/Bionic/Eoan/g" Dockerfile
+        sed -i -e "s/latest/rolling/g" -e "s/LTS/Rolling/g" Dockerfile
 
         docker build . --file Dockerfile
         --rm --force-rm --compress --no-cache=true --pull
@@ -53,11 +56,26 @@ jobs:
         --build-arg VCS_REF=`git rev-parse --short HEAD`
         --build-arg VCS_URL=`git remote get-url origin`
         --build-arg VERSION='1.1'
-        --tag $DOCKER_USERNAME/$IMAGE_NAME:eoan
+        --tag $DOCKER_USERNAME/$IMAGE_NAME:rolling
 
-        docker push $DOCKER_USERNAME/$IMAGE_NAME:eoan
+        docker push $DOCKER_USERNAME/$IMAGE_NAME:rolling
 
-        docker logout
+    - name: Create & Push the Focal-based (Devel) Droid Builder Container
+      if: "contains(github.event.head_commit.message, '[build all]')"
+      run: >-
+        docker run --rm --privileged multiarch/qemu-user-static:register --reset
+
+        sed -i -e "s/rolling/devel/g" -e "s/Rolling/Devel/g" Dockerfile
+
+        docker build . --file Dockerfile
+        --rm --force-rm --compress --no-cache=true --pull
+        --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%S%Z"`
+        --build-arg VCS_REF=`git rev-parse --short HEAD`
+        --build-arg VCS_URL=`git remote get-url origin`
+        --build-arg VERSION='1.1'
+        --tag $DOCKER_USERNAME/$IMAGE_NAME:devel
+
+        docker push $DOCKER_USERNAME/$IMAGE_NAME:devel
 
     - name: Refresh MicroBadger Metadata for Container Info
       if: "! contains(github.event.head_commit.message, '[skip ci]')"
