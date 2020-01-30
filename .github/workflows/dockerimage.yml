@@ -7,6 +7,9 @@ on:
     - 'android-env-vars.sh'
     branches:
     - master
+  schedule:
+    # Run at 03:00am, on the 1st day, every month
+    - cron: '0 0 3 1 * ?'
 
 jobs:
 
