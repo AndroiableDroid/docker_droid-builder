@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM ubuntu:latest
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -7,7 +7,7 @@ ARG VERSION
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="Android ROM Builder" \
-      org.label-schema.description="Ubuntu Bionic Image For Building Android ROMs/TWRPs, Rebased From @yshalsager/cyanogenmod:latest" \
+      org.label-schema.description="Ubuntu Latest LTS Image For Building Android ROMs/TWRPs" \
       org.label-schema.url="https://rokibhasansagar.github.io/" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url=$VCS_URL \
@@ -36,7 +36,7 @@ RUN apt-get -q -y update \
         curl wget wput git subversion mercurial build-essential squashfs-tools automake autoconf binutils \
         software-properties-common coreutils bc tree asciinema sshpass sudo \
         android-sdk-platform-tools android-tools-adb android-tools-adbd android-tools-fastboot \
-        openjdk-8-jdk openjdk-8-jre openjdk-8-jre-headless maven nodejs\
+        openjdk-8-jdk openjdk-8-jre openjdk-8-jre-headless maven nodejs \
         file screen axel bison clang cmake rsync flex gnupg gperf pngcrush schedtool bsdmainutils \
         python-dev python3-dev zip unzip lzop zlib1g-dev xz-utils pxz patchutils \
         gcc gcc-multilib g++ g++-multilib libxml2 libxml2-utils xsltproc expat \
