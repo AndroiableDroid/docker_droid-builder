@@ -7,7 +7,7 @@ ARG VERSION
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="Android ROM Builder" \
-      org.label-schema.description="Ubuntu LTS Image For Building Android ROMs/TWRPs" \
+      org.label-schema.description="Ubuntu Latest LTS Image For Building Android ROMs/TWRPs" \
       org.label-schema.url="https://rokibhasansagar.github.io/" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url=$VCS_URL \
