@@ -8,8 +8,8 @@ on:
     branches:
     - master
   schedule:
-    # Run at 03:00am, on the 1st day, every month
-    - cron: '0 3 1 1-12 ?'
+    # Run at 03:00am, once after every week, every month
+    - cron: '0 3 7,14,21,28 1-12 ?'
 
 jobs:
 
