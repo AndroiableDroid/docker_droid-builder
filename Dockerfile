@@ -55,35 +55,35 @@ RUN mkdir -p /home/builder \
     && echo "builder ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
 
 RUN mkdir /home/builder/bin \
-    && curl -L https://github.com/akhilnarang/repo/raw/master/repo -o /home/builder/bin/repo \
+    && curl -L https://storage.googleapis.com/git-repo-downloads/repo -o /home/builder/bin/repo \
     && curl -s https://api.github.com/repos/tcnksm/ghr/releases/latest | grep "browser_download_url" | grep "amd64.tar.gz" | cut -d '"' -f 4 | wget -qi - \
     && tar -xzf ghr_*_amd64.tar.gz \
     && cp ghr_*_amd64/ghr /home/builder/bin/ \
     && rm -rf ghr_* \
-    && chmod a+x /home/builder/bin/repo /home/builder/bin/ghr \
+    && chmod a+rx /home/builder/bin/repo \
+    && chmod a+x /home/builder/bin/ghr \
     && which repo \
     && which ghr
 
 RUN echo "Setting latest official make, ninja & ccache" \
     && mkdir -p extra \
     && cd extra \
-    && wget -q https://ftp.gnu.org/gnu/make/make-4.2.1.tar.gz \
-    && tar xzf make-4.2.1.tar.gz \
+    && wget -q https://ftp.gnu.org/gnu/make/make-4.3.tar.gz \
+    && tar xzf make-4.3.tar.gz \
     && cd make-*/ \
     && ./configure \
-    && curl -L https://raw.githubusercontent.com/akhilnarang/scripts/master/patches/make-glibc_alloc_fix.patch | patch -p1 \
     && bash ./build.sh 1>/dev/null \
     && sudo install ./make /usr/local/bin/make \
     && cd .. \
     && git clone https://github.com/ninja-build/ninja.git \
     && cd ninja \
-    && git checkout -q v1.9.0 \
+    && git checkout -q v1.10.0 \
     && ./configure.py --bootstrap \
     && sudo install ./ninja /usr/local/bin/ninja \
     && cd .. \
     && git clone https://github.com/ccache/ccache.git \
     && cd ccache \
-    && git checkout -q v3.7.6 \
+    && git checkout -q v3.7.7 \
     && ./autogen.sh \
     && ./configure --disable-man --with-libzstd-from-internet --with-libb2-from-internet \
     && make -j16 \
