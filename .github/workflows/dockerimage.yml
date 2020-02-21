@@ -23,7 +23,7 @@ jobs:
       IMAGE_NAME: droid-builder
 
     steps:
-    - uses: actions/checkout@v1.2.0
+    - uses: actions/checkout@v2
 
     - name: Bypass Build
       if: "contains(github.event.head_commit.message, '[skip ci]')"
