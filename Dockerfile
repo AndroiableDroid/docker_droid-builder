@@ -34,11 +34,11 @@ RUN apt-get -q -y update \
     && apt-get -q -y install \
         apt-utils apt-transport-https \
         curl wget wput git subversion mercurial build-essential squashfs-tools automake autoconf binutils \
-        software-properties-common coreutils bc tree asciinema sshpass sudo \
+        software-properties-common coreutils util-linux bc tree asciinema sshpass sudo \
         android-sdk-platform-tools android-tools-adb android-tools-adbd android-tools-fastboot \
         openjdk-8-jdk openjdk-8-jre openjdk-8-jre-headless maven nodejs \
         file screen axel bison clang cmake rsync flex gnupg gperf pngcrush schedtool bsdmainutils \
-        python-dev python3-dev zip unzip lzop zlib1g-dev xz-utils pxz patchutils \
+        python-dev python3-dev zip unzip lzop zlib1g-dev xz-utils pxz pixz patchutils \
         gcc gcc-multilib g++ g++-multilib libxml2 libxml2-utils xsltproc expat \
         libncurses5-dev lib32ncurses5-dev libreadline-gplv2-dev lib32z1-dev libsdl1.2-dev libwxgtk3.0-dev \
     && apt-get -y clean \
