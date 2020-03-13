@@ -33,8 +33,8 @@ RUN sed 's/main$/main universe/' /etc/apt/sources.list 1>/dev/null
 RUN apt-get -q -y update \
     && apt-get -q -y install \
         apt-utils apt-transport-https \
-        curl wget wput git subversion mercurial build-essential squashfs-tools automake autoconf binutils \
-        software-properties-common coreutils util-linux xterm rename bc tree asciinema sshpass sudo \
+        curl wget wput git build-essential squashfs-tools automake autoconf binutils \
+        software-properties-common coreutils util-linux xterm rename bc tree dos2unix sshpass sudo \
         android-sdk-platform-tools android-tools-adb android-tools-adbd android-tools-fastboot \
         openjdk-8-jdk maven nodejs python-dev python3-dev \
         file screen axel bison clang cmake rsync flex gnupg gperf pngcrush schedtool bsdmainutils \
