@@ -20,7 +20,7 @@ LABEL maintainer="fr3akyphantom <rokibhasansagar2014@outlook.com>"
 ENV \
     DEBIAN_FRONTEND=noninteractive \
     LANG=C.UTF-8 \
-    JAVA_OPTS=" -Xmx3584m " \
+    JAVA_OPTS=" -Xmx3840m " \
     JAVA_HOME=/usr/lib/jvm/java-1.8-openjdk-amd64 \
     PATH=~/bin:/usr/local/bin:/home/builder/bin:$PATH \
     USE_CCACHE=1 \
@@ -34,7 +34,7 @@ RUN apt-get -q -y update \
     && apt-get -q -y install \
         apt-utils apt-transport-https \
         curl wget wput git build-essential squashfs-tools automake autoconf binutils \
-        software-properties-common coreutils util-linux xterm rename bc tree dos2unix sshpass sudo \
+        software-properties-common coreutils util-linux gawk xterm rename bc tree dos2unix sshpass sudo \
         android-sdk-platform-tools android-tools-adb android-tools-adbd android-tools-fastboot \
         openjdk-8-jdk maven nodejs python-dev python3-dev \
         file screen axel bison clang cmake rsync flex gnupg gperf pngcrush schedtool bsdmainutils \
