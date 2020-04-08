@@ -36,7 +36,7 @@ RUN apt-get -q -y update \
         curl wget wput git build-essential squashfs-tools automake autoconf binutils \
         software-properties-common coreutils util-linux gawk xterm rename bc tree dos2unix sshpass sudo \
         android-sdk-platform-tools android-tools-adb android-tools-adbd android-tools-fastboot \
-        openjdk-8-jdk maven nodejs python-dev python3-dev \
+        openjdk-8-jdk maven nodejs python-dev python3-dev jq \
         file screen axel bison clang cmake rsync flex gnupg gperf pngcrush schedtool bsdmainutils \
         zip unzip lzop zlib1g-dev xz-utils pxz pixz zstd libzstd1-dev libb2-dev patchutils \
         gcc gcc-multilib g++ g++-multilib libxml2 libxml2-utils xsltproc expat re2c \
@@ -55,15 +55,13 @@ RUN mkdir -p /home/builder \
     && echo "builder ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
 
 RUN mkdir /home/builder/bin \
-    && curl -L https://storage.googleapis.com/git-repo-downloads/repo -o /home/builder/bin/repo \
+    && curl -L https://storage.googleapis.com/git-repo-downloads/repo -o /home/builder/bin/repo || curl -L https://github.com/GerritCodeReview/git-repo/raw/v2.5/repo -o /home/builder/bin/repo \
     && curl -s https://api.github.com/repos/tcnksm/ghr/releases/latest | grep "browser_download_url" | grep "amd64.tar.gz" | cut -d '"' -f 4 | wget -qi - \
     && tar -xzf ghr_*_amd64.tar.gz \
     && cp ghr_*_amd64/ghr /home/builder/bin/ \
     && rm -rf ghr_* \
     && chmod a+rx /home/builder/bin/repo \
-    && chmod a+x /home/builder/bin/ghr \
-    && which repo \
-    && which ghr
+    && chmod a+x /home/builder/bin/ghr
 
 RUN echo "Setting latest official make, ninja & ccache" \
     && mkdir -p extra \
@@ -83,19 +81,15 @@ RUN echo "Setting latest official make, ninja & ccache" \
     && cd .. \
     && git clone https://github.com/ccache/ccache.git \
     && cd ccache \
-    && git checkout -q v3.7.7 \
+    && git checkout -q v3.7.9 \
     && ./autogen.sh \
-    && ./configure --disable-man --with-libzstd-from-internet --with-libb2-from-internet \
+    && ./configure --disable-man \
     && make -j16 \
     && sudo make install \
-    && cd .. \
-    && which make \
-    && which ccache \
-    && which ninja \
-    && cd .. \
+    && cd ../.. \
     && rm -rf extra
 
-ADD android-env-vars.sh /etc/android-env-vars.sh
+COPY android-env-vars.sh /etc/android-env-vars.sh
 
 RUN chmod a+x /etc/android-env-vars.sh \
     && echo "source /etc/android-env-vars.sh" >> /etc/bash.bashrc
@@ -103,4 +97,4 @@ RUN chmod a+x /etc/android-env-vars.sh \
 VOLUME [/home/builder]
 VOLUME [/srv/ccache]
 
-RUN CCACHE_DIR=/srv/ccache ccache -M 5G
+RUN CCACHE_DIR=/srv/ccache ccache -M 8G
