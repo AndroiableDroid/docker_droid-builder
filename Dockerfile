@@ -41,6 +41,7 @@ RUN apt-get -q -y update \
         zip unzip lzop zlib1g-dev xz-utils pxz pixz zstd libzstd1-dev libb2-dev patchutils \
         gcc gcc-multilib g++ g++-multilib libxml2 libxml2-utils xsltproc expat re2c \
         ncurses-bin libncurses5-dev lib32ncurses5-dev libreadline-gplv2-dev lib32z1-dev libsdl1.2-dev libwxgtk3.0-dev \
+    && apt-get -y purge openjdk-11-jre-headless \
     && apt-get -y clean \
     && apt-get -y autoremove \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/* \
