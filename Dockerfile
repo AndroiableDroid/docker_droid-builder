@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:bionic
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -7,7 +7,7 @@ ARG VERSION
 
 LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.name="Android ROM Builder" \
-      org.label-schema.description="Ubuntu Latest LTS Image For Building Android ROMs/TWRPs" \
+      org.label-schema.description="Ubuntu Latest Bionic LTS Image For Building Android ROMs/TWRPs" \
       org.label-schema.url="https://rokibhasansagar.github.io/" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.vcs-url=$VCS_URL \
@@ -55,7 +55,7 @@ RUN mkdir -p /home/builder \
     && echo "builder ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
 
 RUN mkdir /home/builder/bin \
-    && curl -L https://storage.googleapis.com/git-repo-downloads/repo -o /home/builder/bin/repo || curl -L https://github.com/GerritCodeReview/git-repo/raw/v2.5/repo -o /home/builder/bin/repo \
+    && curl -L https://github.com/GerritCodeReview/git-repo/raw/stable/repo -o /home/builder/bin/repo \
     && curl -s https://api.github.com/repos/tcnksm/ghr/releases/latest | grep "browser_download_url" | grep "amd64.tar.gz" | cut -d '"' -f 4 | wget -qi - \
     && tar -xzf ghr_*_amd64.tar.gz \
     && cp ghr_*_amd64/ghr /home/builder/bin/ \
