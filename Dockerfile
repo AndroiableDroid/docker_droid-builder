@@ -30,7 +30,8 @@ ENV \
 
 RUN sed 's/main$/main universe/' /etc/apt/sources.list 1>/dev/null
 
-RUN apt-get -q -y update \
+RUN set -xe \
+    && apt-get -q -y update \
     && apt-get -q -y install \
         apt-utils apt-transport-https \
         curl wget wput git build-essential squashfs-tools automake autoconf binutils \
@@ -56,7 +57,7 @@ RUN mkdir -p /home/builder \
     && echo "builder ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
 
 RUN mkdir /home/builder/bin \
-    && curl -L https://github.com/GerritCodeReview/git-repo/raw/stable/repo -o /home/builder/bin/repo \
+    && curl -sL https://github.com/GerritCodeReview/git-repo/raw/stable/repo -o /home/builder/bin/repo \
     && curl -s https://api.github.com/repos/tcnksm/ghr/releases/latest | grep "browser_download_url" | grep "amd64.tar.gz" | cut -d '"' -f 4 | wget -qi - \
     && tar -xzf ghr_*_amd64.tar.gz \
     && cp ghr_*_amd64/ghr /home/builder/bin/ \
