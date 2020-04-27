@@ -3,8 +3,11 @@
   <h1><i>Droid Builder</i></h1>
 
   [![Actions Status](https://github.com/rokibhasansagar/docker_droid-builder/workflows/Docker%20Builder/badge.svg)](https://github.com/rokibhasansagar/docker_droid-builder/actions)
-  [![](https://images.microbadger.com/badges/version/fr3akyphantom/droid-builder.svg)](https://microbadger.com/images/fr3akyphantom/droid-builder "Get your own version badge on microbadger.com")
-  [![](https://images.microbadger.com/badges/commit/fr3akyphantom/droid-builder.svg)](https://microbadger.com/images/fr3akyphantom/droid-builder "Get your own commit badge on microbadger.com")
+  [![Container Builder](https://img.shields.io/badge/Powered%20By-Github%20Actions-blue?logo=github-actions)](#)
+  [![Platform](https://img.shields.io/badge/Based%20On-Ubuntu%20Bionic-orange?logo=ubuntu)](#)
+  [![Docker Image Size](https://img.shields.io/docker/image-size/fr3akyphantom/droid-builder/latest?cacheSeconds=3600)](#)
+  [![Version](https://images.microbadger.com/badges/version/fr3akyphantom/droid-builder.svg)](https://microbadger.com/images/fr3akyphantom/droid-builder "Get your own version badge on microbadger.com")
+  [![Latest Commit](https://images.microbadger.com/badges/commit/fr3akyphantom/droid-builder.svg)](https://microbadger.com/images/fr3akyphantom/droid-builder "Get your own commit badge on microbadger.com")
   [![Docker Pulls](https://img.shields.io/docker/pulls/fr3akyphantom/droid-builder)](https://hub.docker.com/r/fr3akyphantom/droid-builder "Show the Docker Repository")
 
   <h3><i>Standalone Docker Container based upon Updated Ubuntu Bionic 18.04 LTS for Building Android ROMs or Recovery Projects</i></h3>
@@ -12,8 +15,6 @@
 </div>
 
 ---
-
-#### This Image was Rebased From [@yshalsager/cyanogenmod:latest](https://hub.docker.com/r/yshalsager/cyanogenmod "Show the Docker Repository") which is a popular Docker Container used for Building Android ROMs, specially CyanogenMod13.
 
 ### Get the Image
 
@@ -67,7 +68,7 @@ repo init --depth 1 -q -u https://github.com/${DEMO_ORG}/${DEMO_MANIFEST}.git -b
 
 # sync the repo with maximum connections
 # wait for the whole repo to be downloaded
-repo sync -c -f -q --force-sync --no-clone-bundle --no-tags -j32
+repo sync -c -q --force-sync --no-clone-bundle --no-tags -j$(nproc --all)
 
 # clone the specific device trees
 git clone https://github.com/${DEMO_USER}/${DEVICE_REPONAME} device/${VENDOR}/${CODENAME}
@@ -82,7 +83,7 @@ lunch ${BUILD_LUNCH}
 # but it is not recommended for multi-build or shared projects
 
 # build only recovery image or make full ROM/otapackage
-make -j16 recoveryimage || make -j8 otapackage
+make -j$(nproc --all) recoveryimage || make -j$(($(nproc --all) / 2)) otapackage
 ```
 
 ### Well, there you have it!
