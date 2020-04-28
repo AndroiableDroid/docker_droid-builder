@@ -3,11 +3,13 @@
   <h1><i>Droid Builder</i></h1>
 
   [![Actions Status](https://github.com/rokibhasansagar/docker_droid-builder/workflows/Docker%20Builder/badge.svg)](https://github.com/rokibhasansagar/docker_droid-builder/actions)
-  [![Container Builder](https://img.shields.io/badge/Powered%20By-Github%20Actions-blue?logo=github-actions)](#)
-  [![Platform](https://img.shields.io/badge/Based%20On-Ubuntu%20Bionic-orange?logo=ubuntu)](#)
+  [![Container Builder](https://img.shields.io/badge/Powered%20By-Github%20Actions-blue?logo=github-actions)](https://github.com/features/actions "Know about Github Actions")
+  [![Platform](https://img.shields.io/badge/Based%20On-Ubuntu%20Bionic-orange?logo=ubuntu)](https://ubuntu.com/download)
+
   [![Docker Image Size](https://img.shields.io/docker/image-size/fr3akyphantom/droid-builder/latest?cacheSeconds=3600)](#)
-  [![Version](https://images.microbadger.com/badges/version/fr3akyphantom/droid-builder.svg)](https://microbadger.com/images/fr3akyphantom/droid-builder "Get your own version badge on microbadger.com")
-  [![Latest Commit](https://images.microbadger.com/badges/commit/fr3akyphantom/droid-builder.svg)](https://microbadger.com/images/fr3akyphantom/droid-builder "Get your own commit badge on microbadger.com")
+  [![Docker Image Latest Version](https://img.shields.io/docker/v/fr3akyphantom/droid-builder)](#)
+  [![MicroBadger Layers](https://img.shields.io/microbadger/layers/fr3akyphantom/droid-builder/latest)](#)
+  [![Latest Commit](https://images.microbadger.com/badges/commit/fr3akyphantom/droid-builder:latest.svg)](https://microbadger.com/images/fr3akyphantom/droid-builder:latest)
   [![Docker Pulls](https://img.shields.io/docker/pulls/fr3akyphantom/droid-builder)](https://hub.docker.com/r/fr3akyphantom/droid-builder "Show the Docker Repository")
 
   <h3><i>Standalone Docker Container based upon Updated Ubuntu Bionic 18.04 LTS for Building Android ROMs or Recovery Projects</i></h3>
