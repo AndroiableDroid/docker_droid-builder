@@ -1,12 +1,11 @@
-name: Docker Builder
+name: Docker Builder Test
 
 on:
   push:
     paths:
     - 'Dockerfile'
     - 'android-env-vars.sh'
-    branches:
-    - master
+    branches: [ master ]
   schedule:
     # Run at 03:00am, once after every week, every month
     - cron: '0 3 7,14,21,28 1-12 ?'
@@ -18,9 +17,9 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      DOCKER_USERNAME: fr3akyphantom
+      DOCKER_USERNAME: androiabledroid
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      IMAGE_NAME: droid-builder
+      IMAGE_NAME: droid-builder-test
 
     steps:
     - uses: actions/checkout@v2
@@ -50,4 +49,4 @@ jobs:
 
     - name: Refresh MicroBadger Metadata for Container Info
       if: "! contains(github.event.head_commit.message, '[skip ci]')"
-      run: curl -X POST "https://hooks.microbadger.com/images/fr3akyphantom/droid-builder/BvX646w7iSxCNiWg_M7-amdz4qo="
+      run: curl -X POST "https://hooks.microbadger.com/images/fr3akyphantom/droid-builder-test/BvX646w7iSxCNiWg_M7-amdz4qo="
