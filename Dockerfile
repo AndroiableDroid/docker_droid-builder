@@ -36,8 +36,7 @@ RUN set -xe \
         apt-utils apt-transport-https \
         curl wget wput git build-essential squashfs-tools automake autoconf binutils \
         software-properties-common coreutils util-linux gawk xterm rename bc tree dos2unix sshpass sudo \
-        android-sdk-platform-tools android-tools-adb android-tools-adbd android-tools-fastboot \
-        openjdk-8-jdk maven nodejs python-dev python3-dev jq \
+        openjdk-8-jdk maven nodejs python-dev python3-dev python-requests python3-requests jq \
         file screen axel bison clang cmake rsync flex gnupg gperf pngcrush schedtool bsdmainutils \
         zip unzip lzop zlib1g-dev libssl-dev xz-utils pxz pixz zstd libzstd1-dev libb2-dev patchutils \
         gcc gcc-multilib g++ g++-multilib libxml2 libxml2-utils xsltproc expat re2c \
